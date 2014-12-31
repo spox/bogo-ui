@@ -81,3 +81,4 @@ tbl.display
 
 ## Info
 * Repository: https://github.com/spox/bogo-ui
+* Command Line Reporter: https://github.com/wbailey/command_line_reporter
