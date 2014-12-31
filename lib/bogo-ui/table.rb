@@ -42,7 +42,19 @@ module Bogo
       def table(options={})
         @table = BufferedTable.new(options)
         yield
-        [self]
+        self
+      end
+
+      # Override to provide buffered support
+      #
+      # @param options [Hash]
+      # @return [self]
+      def row(options={})
+        options[:encoding] ||= @table.encoding
+        @row = BufferedRow.new(options.merge(:buffer => @table.buffer))
+        yield
+        @table.add(@row)
+        self
       end
 
       # Output table to defined UI
@@ -56,6 +68,8 @@ module Bogo
         @content.each do |tblock|
           instance_exec(&tblock)
         end
+        @table.output
+        @table.buffer.rewind
         output = @table.buffer.read.split("\n")
         output.slice!(0, @printed_lines)
         @printed_lines = output.size
@@ -74,6 +88,32 @@ module Bogo
         # @return [self]
         def initialize(*args)
           @buffer = StringIO.new
+          super
+        end
+
+        # buffered puts
+        def puts(string)
+          buffer.puts(string)
+        end
+
+        # buffered print
+        def print(string)
+          buffer.print(string)
+        end
+
+      end
+
+      # Wrapper class to get desired buffering
+      class BufferedRow < CommandLineReporter::Row
+
+        # @return [StringIO]
+        attr_reader :buffer
+
+        # Create new instance and init buffer
+        #
+        # @return [self]
+        def initialize(options={})
+          @buffer = options.delete(:buffer)
           super
         end
 
