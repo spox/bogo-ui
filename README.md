@@ -21,6 +21,7 @@ ui.info "This is information with #{ui.color('color', :bold, :green)}"
 
 result = ui.ask('Type a word')
 ui.info "You provided: #{result}"
+```
 
 ## Bogo::Ui::Table
 
