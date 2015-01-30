@@ -13,17 +13,29 @@ module Bogo
       attr_reader :ui
       # @return [Array<Proc>]
       attr_reader :table
+      # @return [Object]
+      attr_reader :proxy_to
 
       # Create a new instance
       #
       # @param ui [Bogo::Ui]
       # @yield table content
       # @return [self]
-      def initialize(ui, &block)
+      def initialize(ui, inst=nil, &block)
+        @proxy_to = inst
         @ui = ui
         @base = block
         @content = []
         @printed_lines = 0
+      end
+
+      # If proxy instance is provided, forward if possible
+      def method_missing(m_name, *args, &block)
+        if(proxy_to && proxy_to.respond_to?(m_name, true))
+          proxy_to.send(m_name, *args, &block)
+        else
+          super
+        end
       end
 
       # Update the table content
