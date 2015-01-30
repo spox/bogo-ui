@@ -110,6 +110,7 @@ module Bogo
       end
       result
     end
+    alias_method :ask_question, :ask
 
   end
 end
