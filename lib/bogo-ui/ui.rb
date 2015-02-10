@@ -101,7 +101,10 @@ module Bogo
     # @param question [String]
     # @param default [String]
     # @return [String]
-    def ask(question, default=nil)
+    def ask(question, *args)
+      opts = (args.detect{|x| x.is_a?(Hash)} || {}).to_smash
+      default = args.detect{|x| x.is_a?(String)}
+      valid = opts[:valid]
       string = question.dup
       if(default)
         string << " [#{default}]"
@@ -113,14 +116,30 @@ module Bogo
         if(result.empty? && default)
           result = default
         end
+        if(valid)
+          case valid
+          when Array
+            result = nil unless valid.include?(result)
+          when Regexp
+            result = nil unless result =~ valid
+          end
+        end
         if(result.empty?)
-          error 'Please provide a value'
+          error 'Please provide a valid value'
           result = nil
         end
       end
       result
     end
     alias_method :ask_question, :ask
+
+    # Confirm question. Requires user to provide Y or N answer
+    #
+    # @param question [String]
+    def confirm(question)
+      result = ask("#{question} (Y/N)", :valid => /[YyNn]/).downcase
+      raise 'Confirmation declined!' unless result == 'y'
+    end
 
     # Create a new table
     #
