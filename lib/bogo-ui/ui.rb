@@ -73,6 +73,16 @@ module Bogo
       string
     end
 
+    # Format fatal string
+    #
+    # @param string [String]
+    # @return [String]
+    def fatal(string, *args)
+      output_method = args.include?(:nonewline) ? :print : :puts
+      self.send(output_method, "#{color('[FATAL]:', :red, :bold)} #{string}")
+      string
+    end
+
     # Colorize string
     #
     # @param string [String]
