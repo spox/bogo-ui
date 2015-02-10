@@ -122,5 +122,13 @@ module Bogo
     end
     alias_method :ask_question, :ask
 
+    # Create a new table
+    #
+    # @param inst [Object] instance to attach table (for method call proxy)
+    # @return [Table]
+    def table(inst=nil, &block)
+      Table.new(self, inst, &block)
+    end
+
   end
 end
