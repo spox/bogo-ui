@@ -84,8 +84,8 @@ module Bogo
         @table.buffer.rewind
         output = @table.buffer.read.split("\n")
         output.slice!(0, @printed_lines)
-        @printed_lines = output.size
-        ui.puts output.join("\n")
+        @printed_lines += output.size
+        ui.puts output.join("\n") unless output.empty?
         self
       end
 
