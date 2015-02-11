@@ -11,6 +11,12 @@ module Bogo
     attr_accessor :colorize
     # @return [String]
     attr_accessor :application_name
+    # @return [IO]
+    attr_reader :output_to
+    # @return [Truthy, Falsey]
+    attr_reader :auto_confirm
+    # @return [Truthy, Falsey]
+    attr_reader :auto_default
 
     # Build new UI instance
     #
@@ -20,9 +26,15 @@ module Bogo
     # @option args [IO] :output_to IO to write
     # @return [self]
     def initialize(args={})
-      @application_name = args.fetch(:app_name)
+      @application_name = args.fetch(:app_name, 'App')
       @colorize = args.fetch(:colors, true)
       @output_to = args.fetch(:output_to, $stdout)
+      @auto_confirm = args.fetch(:auto_confirm,
+        args.fetch(:yes, false)
+      )
+      @auto_default = args.fetch(:auto_default,
+        args.fetch(:defaults, false)
+      )
     end
 
     # Output directly
@@ -30,7 +42,7 @@ module Bogo
     # @param string [String]
     # @return [String]
     def puts(string='')
-      @output_to.puts string
+      output_to.puts string
       string
     end
 
@@ -39,7 +51,7 @@ module Bogo
     # @param string [String]
     # @return [String]
     def print(string='')
-      @output_to.print string
+      output_to.print string
       string
     end
 
@@ -103,33 +115,37 @@ module Bogo
     # @return [String]
     def ask(question, *args)
       opts = (args.detect{|x| x.is_a?(Hash)} || {}).to_smash
-      default = args.detect{|x| x.is_a?(String)}
-      valid = opts[:valid]
-      string = question.dup
-      if(default)
-        string << " [#{default}]"
-      end
-      result = nil
-      until(result)
-        info "#{string}: ", :nonewline
-        result = $stdin.gets.strip
-        if(result.empty? && default)
-          result = default
+      default = args.detect{|x| x.is_a?(String)} || opts[:default]
+      if(auto_default && default)
+        default
+      else
+        valid = opts[:valid]
+        string = question.dup
+        if(default)
+          string << " [#{default}]"
         end
-        if(valid)
-          case valid
-          when Array
-            result = nil unless valid.include?(result)
-          when Regexp
-            result = nil unless result =~ valid
+        result = nil
+        until(result)
+          info "#{string}: ", :nonewline
+          result = $stdin.gets.strip
+          if(result.empty? && default)
+            result = default
+          end
+          if(valid)
+            case valid
+            when Array
+              result = nil unless valid.include?(result)
+            when Regexp
+              result = nil unless result =~ valid
+            end
+          end
+          if(result.empty?)
+            error 'Please provide a valid value'
+            result = nil
           end
         end
-        if(result.empty?)
-          error 'Please provide a valid value'
-          result = nil
-        end
+        result
       end
-      result
     end
     alias_method :ask_question, :ask
 
@@ -137,8 +153,10 @@ module Bogo
     #
     # @param question [String]
     def confirm(question)
-      result = ask("#{question} (Y/N)", :valid => /[YyNn]/).downcase
-      raise 'Confirmation declined!' unless result == 'y'
+      unless(auto_confirm)
+        result = ask("#{question} (Y/N)", :valid => /[YyNn]/).downcase
+        raise 'Confirmation declined!' unless result == 'y'
+      end
     end
 
     # Create a new table
