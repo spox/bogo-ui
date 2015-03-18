@@ -17,6 +17,8 @@ module Bogo
     attr_reader :auto_confirm
     # @return [Truthy, Falsey]
     attr_reader :auto_default
+    # @return [Smash] options
+    attr_reader :options
 
     # Build new UI instance
     #
@@ -29,12 +31,9 @@ module Bogo
       @application_name = args.fetch(:app_name, 'App')
       @colorize = args.fetch(:colors, true)
       @output_to = args.fetch(:output_to, $stdout)
-      @auto_confirm = args.fetch(:auto_confirm,
-        args.fetch(:yes, false)
-      )
-      @auto_default = args.fetch(:auto_default,
-        args.fetch(:defaults, false)
-      )
+      @auto_confirm = args.fetch(:auto_confirm, args.fetch(:yes, false))
+      @auto_default = args.fetch(:auto_default, args.fetch(:defaults, false))
+      @options = args.to_smash
     end
 
     # Output directly
@@ -93,6 +92,29 @@ module Bogo
       output_method = args.include?(:nonewline) ? :print : :puts
       self.send(output_method, "#{color('[FATAL]:', :red, :bold)} #{string}")
       string
+    end
+
+    # Output info if verbose flag is set
+    #
+    # @param string [String]
+    # @return [String, NilClass]
+    def verbose(string, *args)
+      if(options[:verbose])
+        info(string, *args)
+        string
+      end
+    end
+
+    # Format debug string and output only if debug is set
+    #
+    # @param string [String]
+    # @return [String, NilClass]
+    def debug(string, *args)
+      if(options[:debug])
+        output_method = args.include?(:nonewline) ? :print : :puts
+        self.send(output_method, "#{color('[DEBUG]:', :white)} #{string}")
+        string
+      end
     end
 
     # Colorize string
