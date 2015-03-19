@@ -55,4 +55,48 @@ describe Bogo::Ui do
     stream.read.must_equal '[TestUi]: test: '
   end
 
+  describe 'Verbose mode' do
+
+    it 'should not output when verbose is not enabled' do
+      ui.verbose 'testing'
+      stream.rewind
+      stream.read.must_be :empty?
+    end
+
+    it 'should output when verbose mode is enabled' do
+      v_ui = Bogo::Ui.new(
+        :app_name => 'TestUi',
+        :output_to => @stream,
+        :colors => false,
+        :verbose => true
+      )
+      v_ui.verbose 'testing'
+      stream.rewind
+      stream.read.must_equal "[TestUi]: testing\n"
+    end
+
+  end
+
+  describe 'Debug mode' do
+
+    it 'should not output when debug is not enabled' do
+      ui.debug 'testing'
+      stream.rewind
+      stream.read.must_be :empty?
+    end
+
+    it 'should output when debug mode is enabled' do
+      v_ui = Bogo::Ui.new(
+        :app_name => 'TestUi',
+        :output_to => @stream,
+        :colors => false,
+        :debug => true
+      )
+      v_ui.debug 'testing'
+      stream.rewind
+      stream.read.must_equal "[DEBUG]: testing\n"
+    end
+
+  end
+
 end
