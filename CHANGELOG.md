@@ -1,3 +1,7 @@
+## v0.1.8
+* Add `Ui#debug` output method
+* Add `Ui#verbose` output method
+
 ## v0.1.6
 * Include `Ui#fatal` output method
 * Add helper into `Ui` directly for building new tables
