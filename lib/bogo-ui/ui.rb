@@ -60,7 +60,8 @@ module Bogo
     # @return [String]
     def info(string, *args)
       output_method = args.include?(:nonewline) ? :print : :puts
-      self.send(output_method, "#{color("[#{application_name}]:", :green)} #{string}")
+      o_color = args.include?(:verbose) ? :yellow : :green
+      self.send(output_method, "#{color("[#{application_name}]:", o_color)} #{string}")
       string
     end
 
@@ -100,7 +101,7 @@ module Bogo
     # @return [String, NilClass]
     def verbose(string, *args)
       if(options[:verbose])
-        info(string, *args)
+        info(string, :verbose, *args)
         string
       end
     end
@@ -112,7 +113,7 @@ module Bogo
     def debug(string, *args)
       if(options[:debug])
         output_method = args.include?(:nonewline) ? :print : :puts
-        self.send(output_method, "#{color('[DEBUG]:', :white)} #{string}")
+        self.send(output_method, "#{color('[DEBUG]:', :white, :bold)} #{string}")
         string
       end
     end
