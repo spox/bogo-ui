@@ -1,3 +1,6 @@
+## v0.1.10
+* Update `Ui#ask_question` to properly handle non-string values
+
 ## v0.1.8
 * Add `Ui#debug` output method
 * Add `Ui#verbose` output method
