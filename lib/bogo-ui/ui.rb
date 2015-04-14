@@ -162,7 +162,7 @@ module Bogo
               result = nil unless result =~ valid
             end
           end
-          if(result.empty?)
+          if(result.to_s.empty?)
             error 'Please provide a valid value'
             result = nil
           end
