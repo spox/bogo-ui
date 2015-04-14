@@ -151,7 +151,7 @@ module Bogo
         until(result)
           info "#{string}: ", :nonewline
           result = $stdin.gets.strip
-          if(result.empty? && default)
+          if(result.to_s.empty? && default)
             result = default
           end
           if(valid)
