@@ -14,9 +14,9 @@ module Bogo
     # @return [IO]
     attr_reader :output_to
     # @return [Truthy, Falsey]
-    attr_reader :auto_confirm
+    attr_accessor :auto_confirm
     # @return [Truthy, Falsey]
-    attr_reader :auto_default
+    attr_accessor :auto_default
     # @return [Smash] options
     attr_reader :options
 
