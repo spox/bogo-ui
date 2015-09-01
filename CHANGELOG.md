@@ -1,3 +1,6 @@
+## v0.1.12
+* Allow `Ui#auto_confirm` and `Ui#auto_default` to be modified
+
 ## v0.1.10
 * Update `Ui#ask_question` to properly handle non-string values
 
