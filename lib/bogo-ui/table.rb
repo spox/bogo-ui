@@ -91,7 +91,6 @@ module Bogo
         @printed_lines.concat(
           output.map{|l| Digest::SHA256.hexdigest(l.gsub(/\s/, '')) }
         )
-        puts @printed_lines
         ui.puts output.join("\n") unless output.empty?
         self
       end
