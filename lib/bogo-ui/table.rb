@@ -26,7 +26,7 @@ module Bogo
         @ui = ui
         @base = block
         @content = []
-        @printed_lines = 0
+        @printed_lines = []
       end
 
       # If proxy instance is provided, forward if possible
@@ -83,8 +83,15 @@ module Bogo
         @table.output
         @table.buffer.rewind
         output = @table.buffer.read.split("\n")
-        output.slice!(0, @printed_lines)
-        @printed_lines += output.size
+        output = output.find_all do |line|
+          !@printed_lines.include?(
+            Digest::SHA256.hexdigest(line.gsub(/\s/, ''))
+          )
+        end
+        @printed_lines.concat(
+          output.map{|l| Digest::SHA256.hexdigest(l.gsub(/\s/, '')) }
+        )
+        puts @printed_lines
         ui.puts output.join("\n") unless output.empty?
         self
       end
