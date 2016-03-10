@@ -1,3 +1,6 @@
+# v0.1.16
+* Remove debug artifact
+
 # v0.1.14
 * Update how previously printed table content is tracked
 
