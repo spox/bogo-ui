@@ -150,7 +150,9 @@ module Bogo
         result = nil
         until(result)
           info "#{string}: ", :nonewline
-          result = $stdin.gets.strip
+          result = opts[:no_echo] ?
+            $stdin.noecho(&:gets).strip :
+            $stdin.gets.strip
           if(result.to_s.empty? && default)
             result = default
           end
