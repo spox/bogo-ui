@@ -153,9 +153,11 @@ module Bogo
           result = opts[:no_echo] ?
             $stdin.noecho(&:gets).strip :
             $stdin.gets.strip
+          puts "\n" if opts[:no_echo]
           if(result.to_s.empty? && default)
             result = default
           end
+
           if(valid)
             case valid
             when Array
