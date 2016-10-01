@@ -1,3 +1,6 @@
+# v0.1.20
+* Include newline output when reading input with no echo
+
 # v0.1.18
 * Add `:no_echo` option to `Ui#ask_question` to disable STDIN echo
 
