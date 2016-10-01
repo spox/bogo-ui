@@ -1,3 +1,6 @@
+# v0.1.18
+* Add `:no_echo` option to `Ui#ask_question` to disable STDIN echo
+
 # v0.1.16
 * Remove debug artifact
 
