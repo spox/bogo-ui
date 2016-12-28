@@ -145,7 +145,8 @@ module Bogo
         valid = opts[:valid]
         string = question.dup
         if(default)
-          string << " [#{default}]"
+          default_string = !default.empty? && opts[:hide_default] ? '*****' : default
+          string << " [#{default_string}]"
         end
         result = nil
         until(result)
