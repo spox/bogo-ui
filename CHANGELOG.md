@@ -1,3 +1,6 @@
+# v0.1.22
+* Support masking default answers via :hide_default option
+
 # v0.1.20
 * Include newline output when reading input with no echo
 
