@@ -145,7 +145,7 @@ module Bogo
         valid = opts[:valid]
         string = question.dup
         if(default)
-          default_string = !default.empty? && opts[:hide_default] ? '*****' : default
+          default_string = !default.to_s.empty? && opts[:hide_default] ? '*****' : default
           string << " [#{default_string}]"
         end
         result = nil
@@ -156,7 +156,7 @@ module Bogo
             $stdin.gets.strip
           puts "\n" if opts[:no_echo]
           if(result.to_s.empty? && default)
-            result = default
+            result = default.to_s
           end
 
           if(valid)

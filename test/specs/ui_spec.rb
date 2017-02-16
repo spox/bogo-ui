@@ -55,6 +55,39 @@ describe Bogo::Ui do
     stream.read.must_equal '[TestUi]: test: '
   end
 
+  describe 'default value specified' do
+    it 'should show default value when asking for input' do
+      cache_in = $stdin
+      $stdin = StringIO.new("test\n")
+      result = ui.ask('test', :default => 'a value')
+      $stdin = cache_in
+      stream.rewind
+      result.must_equal 'test'
+      stream.read.must_equal '[TestUi]: test [a value]: '
+    end
+
+    it 'should hide default when asking for input when requested' do
+      cache_in = $stdin
+      $stdin = StringIO.new("test\n")
+      result = ui.ask('test', :default => 'a value', :hide_default => true)
+      $stdin = cache_in
+      stream.rewind
+      result.must_equal 'test'
+      stream.read.must_equal '[TestUi]: test [*****]: '
+    end
+
+    it 'should hide default when asking for input when requested if default is non-string' do
+      cache_in = $stdin
+      $stdin = StringIO.new("test\n")
+      result = ui.ask('test', :default => 3, :hide_default => true)
+      $stdin = cache_in
+      stream.rewind
+      result.must_equal 'test'
+      stream.read.must_equal '[TestUi]: test [*****]: '
+    end
+
+  end
+
   describe 'Verbose mode' do
 
     it 'should not output when verbose is not enabled' do
