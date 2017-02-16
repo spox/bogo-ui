@@ -1,3 +1,6 @@
+# v0.1.24
+* Fix type bug when checking default value on `Ui#ask` (#4)
+
 # v0.1.22
 * Support masking default answers via :hide_default option
 
