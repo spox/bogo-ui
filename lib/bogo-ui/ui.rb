@@ -1,5 +1,6 @@
 require 'bogo-ui'
 require 'paint'
+require 'io/console'
 
 module Bogo
   # CLI UI helper
