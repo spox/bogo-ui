@@ -1,3 +1,6 @@
+# v0.1.26
+* Load io/console for noecho (#5)
+
 # v0.1.24
 * Fix type bug when checking default value on `Ui#ask` (#4)
 
