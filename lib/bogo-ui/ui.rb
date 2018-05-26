@@ -6,6 +6,10 @@ module Bogo
   # CLI UI helper
   class Ui
 
+    # Custom exception type when confirmation is
+    # declined by the user
+    class ConfirmationDeclined < StandardError; end
+
     autoload :Table, 'bogo-ui/table'
 
     # @return [Truthy, Falsey]
@@ -184,7 +188,7 @@ module Bogo
     def confirm(question)
       unless(auto_confirm)
         result = ask("#{question} (Y/N)", :valid => /[YyNn]/).downcase
-        raise 'Confirmation declined!' unless result == 'y'
+        raise ConfirmationDeclined.new 'Confirmation declined!' unless result == 'y'
       end
     end
 
