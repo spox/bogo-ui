@@ -1,3 +1,6 @@
+# v0.1.28
+* Add custom exception type for declined confirmations
+
 # v0.1.26
 * Load io/console for noecho (#5)
 
