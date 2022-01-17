@@ -1,16 +1,15 @@
-require 'bogo-ui'
 require 'paint'
 require 'io/console'
 
 module Bogo
   # CLI UI helper
   class Ui
+    autoload :Table, 'bogo-ui/table'
+    autoload :VERSION, 'bogo-ui/version'
 
     # Custom exception type when confirmation is
     # declined by the user
     class ConfirmationDeclined < StandardError; end
-
-    autoload :Table, 'bogo-ui/table'
 
     # @return [Truthy, Falsey]
     attr_accessor :colorize
@@ -199,6 +198,5 @@ module Bogo
     def table(inst=nil, &block)
       Table.new(self, inst, &block)
     end
-
   end
 end

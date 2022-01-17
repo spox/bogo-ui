@@ -1,4 +1,3 @@
-require 'bogo-ui'
 require 'command_line_reporter'
 
 module Bogo

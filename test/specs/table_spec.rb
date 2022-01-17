@@ -1,8 +1,7 @@
+require_relative '../spec'
 require 'stringio'
-require 'minitest/autorun'
 
 describe Bogo::Ui::Table do
-
   before do
     @stream = StringIO.new('')
     @ui = Bogo::Ui.new(
@@ -29,7 +28,7 @@ describe Bogo::Ui::Table do
     end
     table.display
     stream.rewind
-    stream.read.must_equal "name       age        \nme         100        \n"
+    _(stream.read).must_equal "name       age        \nme         100        \n"
   end
 
   it 'should output only new content' do
@@ -47,7 +46,7 @@ describe Bogo::Ui::Table do
     end
     table.display
     stream.rewind
-    stream.read.must_equal "name       age        \nme         100        \n"
+    _(stream.read).must_equal "name       age        \nme         100        \n"
     stream.string.clear
     table.update do
       row do
@@ -57,7 +56,6 @@ describe Bogo::Ui::Table do
     end
     table.display
     stream.rewind
-    stream.read.must_equal "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000you        20         \n"
+    _(stream.read).must_equal "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000you        20         \n"
   end
-
 end
