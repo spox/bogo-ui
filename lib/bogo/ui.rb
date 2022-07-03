@@ -4,8 +4,8 @@ require 'io/console'
 module Bogo
   # CLI UI helper
   class Ui
-    autoload :Table, 'bogo-ui/table'
-    autoload :VERSION, 'bogo-ui/version'
+    autoload :Table, 'bogo/ui/table'
+    autoload :VERSION, 'bogo/ui/version'
 
     # Custom exception type when confirmation is
     # declined by the user
