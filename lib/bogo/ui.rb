@@ -1,3 +1,4 @@
+require 'bogo'
 require 'paint'
 require 'io/console'
 
