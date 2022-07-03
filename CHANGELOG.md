@@ -1,3 +1,6 @@
+# v0.4.0
+* Update internal path layout
+
 # v0.1.28
 * Add custom exception type for declined confirmations
 
