@@ -7,10 +7,10 @@ Simple CLI output helpers.
 Output formatted information to the CLI.
 
 ```ruby
-require 'bogo-ui'
+require 'bogo/ui'
 
 ui = Bogo::Ui.new(
-  :app_name => 'TestApp'
+  app_name: 'TestApp'
 )
 
 ui.info 'This is information'
@@ -29,9 +29,9 @@ This is a table helper. Under the hood it uses the Command Line Reporter
 with a few modifications. Direct usage:
 
 ```ruby
-require 'bogo-ui'
+require 'bogo/ui'
 
-ui = Bogo::Ui.new(:app_name => 'TestApp')
+ui = Bogo::Ui.new(app_name: 'TestApp')
 Bogo::Ui::Table.new(ui) do
   table do
     row do
@@ -51,9 +51,9 @@ for when polling for updates and wanting to keep the existing table
 structure:
 
 ```ruby
-require 'bogo-ui'
+require 'bogo/ui'
 
-ui = Bogo::Ui.new(:app_name => 'TestApp')
+ui = Bogo::Ui.new(app_name: 'TestApp')
 tbl = Bogo::Ui::Table.new(ui) do
   table do
     row do
