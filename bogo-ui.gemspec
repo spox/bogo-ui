@@ -1,5 +1,5 @@
 $LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__)) + '/lib/'
-require 'bogo-ui'
+require 'bogo-ui/version'
 Gem::Specification.new do |s|
   s.name = 'bogo-ui'
   s.version = Bogo::Ui::VERSION.version
