@@ -46,6 +46,7 @@ module Bogo
         self
       end
 
+      undef_method :table # Remove imported table method before defining
       # Override to provide buffered support
       #
       # @param options [Hash]
