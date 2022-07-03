@@ -1,2 +1,2 @@
-require 'bogo-ui'
+require 'bogo/ui'
 require 'minitest/autorun'
